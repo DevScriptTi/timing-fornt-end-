@@ -1,0 +1,22 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "description": "Description for landing page",
+    "UpBar": {
+      "login": "Login",
+      "register": "Register",
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "logout": "Log Out"
+    }
+  },
+  "Dashboard": {
+    "UpBar": {
+      "Leave": "Leave",
+      "Home": "Home"
+    },
+    "NavBar": {
+      "Home": "Home"
+    }
+  }
+}
