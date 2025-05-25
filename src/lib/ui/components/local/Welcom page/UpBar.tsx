@@ -4,6 +4,8 @@ import NavBarGroup from "../../global/Navigations/NavBar/NavBarGroupd";
 import NavBarItem from "../../global/Navigations/NavBar/NavBarItem";
 import { isAuth } from "@/lib/server/tools/auth";
 import Logout from "./Logout";
+import Image from "next/image";
+import Mode from "../Mode";
 
 export default async function UpBarGuest() {
     const auth = await isAuth()
@@ -15,7 +17,7 @@ export default async function UpBarGuest() {
             <NavBarGroup>
                 {
                     !auth ? (
-                        <>                            
+                        <>
                             <NavBarItem link={`/${locale}/register`}>
                                 {t('HomePage.UpBar.register')}
                             </NavBarItem>
@@ -25,7 +27,7 @@ export default async function UpBarGuest() {
                             <NavBarItem link={`/${locale}/dashboard`}>
                                 {t('HomePage.UpBar.dashboard')}
                             </NavBarItem>
-                            <Logout/>
+                            <Logout />
                         </>
 
                     )
@@ -36,9 +38,10 @@ export default async function UpBarGuest() {
                     {t('HomePage.UpBar.home')}
                 </NavBarItem>
             </NavBarGroup>
+            <Mode />
             <NavBarGroup>
                 <NavBarItem link={`/${locale}/login`}>
-                    Logo
+                    <Image src="/Logo.png" alt="logo" width={32} height={32} />
                 </NavBarItem>
             </NavBarGroup>
         </UpBar>
