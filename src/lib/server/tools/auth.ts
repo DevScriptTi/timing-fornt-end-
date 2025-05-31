@@ -1,6 +1,7 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { decrypt } from "./session";
+import { getUser } from "../actions/auth/getUser";
 
 export interface User {
   id: string;
@@ -31,13 +32,33 @@ export async function isAuth(): Promise<boolean> {
 
 export async function isAdmin(): Promise<boolean> {
   try {
-    const cookie = (await cookies()).get("user")?.value;
-    if (!cookie) return false;
-
-    const user: User = JSON.parse(cookie);
-    return user.role === "admin";
+    const user = await getUser();
+    if (!user) return false;
+    return user.user.key.keyable_type === "admin";
   } catch (error) {
     console.error("Admin check failed:", error);
+    return false;
+  }
+}
+
+export async function isTeacher(): Promise<boolean> {
+  try {
+    const user = await getUser();
+    if (!user) return false;
+    return user.user.key.keyable_type === "teacher";
+  } catch (error) {
+    console.error("Teacher check failed:", error);
+    return false;
+  }
+}
+
+export async function isStudent(): Promise<boolean> {
+  try {
+    const user = await getUser();
+    if (!user) return false;
+    return user.user.key.keyable_type === "student";
+  } catch (error) {
+    console.error("Student check failed:", error);
     return false;
   }
 }

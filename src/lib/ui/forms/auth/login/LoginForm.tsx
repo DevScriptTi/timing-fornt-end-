@@ -13,14 +13,14 @@ import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 
 const FormSchema = z.object({
-  email: z.string().email({ message: "Invalid email" }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters long" })
+    email: z.string().email({ message: "Invalid email" }),
+    password: z.string().min(8, { message: "Password must be at least 8 characters long" })
 });
 
 export default function LoginForm() {
     const router = useRouter();
     const locale = useLocale();
-    const { handleSubmit, register, formState: { errors, isSubmitting , isSubmitSuccessful}, setError } = useForm<LoginData>({
+    const { handleSubmit, register, formState: { errors, isSubmitting, isSubmitSuccessful }, setError } = useForm<LoginData>({
         resolver: zodResolver(FormSchema),
     })
     const onSubmit: SubmitHandler<LoginData> = async (data) => {
@@ -38,12 +38,17 @@ export default function LoginForm() {
                     });
                 }
             } else if (response.success) {
-                router.replace(`/${locale}/dashboard`);
+                console.log(response.type)
+                if (response.type === "student" || response.type === "teacher") {
+                    router.replace(`/${locale}`);
+                } else if (response.type === "admin") {
+                    router.replace(`/${locale}/dashboard`);
+                }
             }
         } catch (error) {
             console.error('Login error:', error);
         }
-        
+
 
     }
     return (
@@ -64,7 +69,7 @@ export default function LoginForm() {
                     type="password"
                     error={errors.password?.message}
                 />
-                <Button type="submit" mode="filled" icon={isSubmitting || isSubmitSuccessful? <Loader2 className="animate-spin" /> : undefined} disabled={isSubmitting}>
+                <Button type="submit" mode="filled" icon={isSubmitting || isSubmitSuccessful ? <Loader2 className="animate-spin" /> : undefined} disabled={isSubmitting}>
                     {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
             </FormSection>

@@ -12,12 +12,12 @@ const axiosInstance = axios.create({
     },
 });
 
-export async function login({ data }: { data: LoginData }): Promise<{ error?: LoginResponseError, success?: boolean }> {
+export async function login({ data }: { data: LoginData }): Promise<{ error?: LoginResponseError, success?: boolean, type?: string   }> {
     try {
         const response = await axiosInstance.post('/auth/login', data);
         const { token, user } = response.data;
         await createSession(user.id.toString(), token);
-        return { success: true };
+        return { success: true , type : user?.key?.keyable_type as string};
     } catch (error) {
         console.error('Login error:', error);
         if (axios.isAxiosError(error) && error.response?.data) {

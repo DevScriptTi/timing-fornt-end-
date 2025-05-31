@@ -18,22 +18,7 @@ const FormSchema = z.object({
     email: z.string().email({
         message: "Please enter a valid email address.",
     }),
-    password: z.string()
-        .min(8, {
-            message: "Password must be at least 8 characters long"
-        })
-        .regex(/[A-Z]/, {
-            message: "Password must contain at least one uppercase letter"
-        })
-        .regex(/[a-z]/, {
-            message: "Password must contain at least one lowercase letter"
-        })
-        .regex(/[0-9]/, {
-            message: "Password must contain at least one number"
-        })
-        .regex(/[^A-Za-z0-9]/, {
-            message: "Password must contain at least one special character"
-        }),
+    password: z.string(),
     password_confirmation: z.string(),
     key: z.string().min(1, {
         message: "Key is required"
@@ -91,7 +76,7 @@ export default function RegisterForm() {
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="text-on-surface dark:text-dark-on-surface">Login now</span>
-                            <Link href={`/${locale}/login`} className="text-primary dark:text-dark-primary hover:underline">
+                            <Link href={`/${locale}`} className="text-primary dark:text-dark-primary hover:underline">
                                 Login here
                             </Link>
                         </div>

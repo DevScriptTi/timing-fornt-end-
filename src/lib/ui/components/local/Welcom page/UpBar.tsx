@@ -11,7 +11,6 @@ export default async function UpBarGuest() {
     const auth = await isAuth()
     const t = await getTranslations()
     const locale = await getLocale()
-    // console.log(locale)
     return (
         <UpBar isClient>
             <NavBarGroup>

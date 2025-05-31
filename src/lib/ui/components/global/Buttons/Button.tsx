@@ -2,7 +2,7 @@
 import "@/app/globals.css";
 import React, { experimental_useEffectEvent } from "react";
 
-export default function Button({ children, click, disabled = false, mode, icon, type }: { children?: React.ReactNode, click?: () => void, disabled?: boolean, type?: "submit" | "reset" | "button" | undefined, mode?: "filled" | "outlined" | "text" | "icon" | "elevated", icon?: React.ReactNode }) {
+export default function Button({ children, click, disabled = false, mode, icon, type ,onClick }: { children?: React.ReactNode, click?: () => void, disabled?: boolean, type?: "submit" | "reset" | "button" | undefined, mode?: "filled" | "outlined" | "text" | "icon" | "elevated", icon?: React.ReactNode, onClick?: () => void }) {
   const baseClass = "h-10 w-fit px-4 flex items-center justify-center rounded-full text-label-large";
   const variants = {
     filled: `bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary hover:bg-primary/65 dark:hover:bg-dark-primary/65 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:focus:ring-dark-primary/50 focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-dark-background`,
@@ -14,7 +14,7 @@ export default function Button({ children, click, disabled = false, mode, icon, 
   return (
     <button
       type={type}
-      onClick={click}
+      onClick={onClick}
       disabled={disabled}
       className={`
             ${baseClass}

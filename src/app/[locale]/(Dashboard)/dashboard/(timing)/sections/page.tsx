@@ -1,94 +1,48 @@
-import Button from "@/lib/ui/components/global/Buttons/Button";
-import {
-    DashContent,
-    DashContentAction,
-    DashContenTitle,
-    DashContentStat,
-    DashContentStatItem,
-    DashContentTable,
-    TableTd,
-    TableTdMain,
-    TableThead,
-    TableTr
-} from "@/lib/ui/components/local/Dashboard/DashCrudContent";
-import { Pencil, Timer, TimerIcon, Trash, UserPen } from "lucide-react";
+import { DashContentAction, DashContentPaginationSkeleton, DashContentStatItemSkeleton, DashContentTableSkeleton } from "@/lib/ui/components/local/Dashboard/DashCrudContent";
+import { DashContenTitle } from "@/lib/ui/components/local/Dashboard/DashCrudContent";
+import { getSections } from "@/lib/server/actions/section/getSections";
+import DashSection from "@/lib/ui/components/global/Section/Section";
+import { Suspense } from "react";
 import Link from "next/link";
+import Button from "@/lib/ui/components/global/Buttons/Button";
+import SectionStat from "@/lib/ui/components/local/Dashboard/Section/SectionStat";
+import SectionsTable from "@/lib/ui/components/local/Dashboard/Section/SectionsTable";
+import SectionPagination from "@/lib/ui/components/local/Dashboard/Section/SectionPagination";
+import { Plus } from "lucide-react";
 
-type Section = {
-    id: number;
-    name: string;
-    year: {
-        id: number;
-        name: string;
-        departement: {
-            id: number;
-            name: string;
-        };
-    };
-}[];
+interface PageProps {
+    searchParams: { page?: string }
+}               
 
-export default function SectionsPage() {
-    const sections: Section = [
-        {
-            id: 1,
-            name: "Section A",
-            year: {
-                id: 1,
-                name: "First Year",
-                departement: {
-                    id: 1,
-                    name: "Computer Science"
-                }
-            }
-        },
-        {
-            id: 2,
-            name: "Section B",
-            year: {
-                id: 2,
-                name: "Second Year",
-                departement: {
-                    id: 1,
-                    name: "Computer Science"
-                }
-            }
-        }
-    ];
+export default async function page({ searchParams }: PageProps) {
+    const page = (await searchParams).page || "1";
+    const sections = await getSections(parseInt(page));
 
     return (
-        <DashContent>
+        <DashSection>
             <DashContenTitle>Sections</DashContenTitle>
-            <DashContentStat>
-                <DashContentStatItem title="Total Sections" value={sections.length.toString()} icon={<UserPen size={80} />} />
-            </DashContentStat>
+            <Suspense fallback={<DashContentStatItemSkeleton />}>
+                <SectionStat />
+            </Suspense>
             <DashContentAction>
-                <Button mode="filled" icon={<UserPen size={24} />}>Create Section</Button>
+                <CreateSection />
             </DashContentAction>
-            <DashContentTable>
-                <TableThead list={['Section Name', 'Year', 'Department', 'Settings']} />
-                <tbody>
-                    {sections.map((section) => (
-                        <TableTr key={section.id}>
-                            <TableTdMain value={section.name} />
-                            <TableTd>{section.year.name}</TableTd>
-                            <TableTd>{section.year.departement.name}</TableTd>
-                            <TableTd>
-                                <div className="flex items-center gap-1">
-                                    <Link href={`/dashboard/sections/${section.id}`}>
-                                        <Pencil className="text-green-700 dark:text-green-400" size={16} />
-                                    </Link>
-                                    <Link href={`/dashboard/sections/${section.id}`}>
-                                        <Trash className="text-error dark:text-dark-error" size={16} />
-                                    </Link>
-                                    <Link href={`/dashboard/sections/timing/${section.id}`}>
-                                        <Timer className="text-secondary dark:text-dark-secondary" size={16} />
-                                    </Link>
-                                </div>
-                            </TableTd>
-                        </TableTr>
-                    ))}
-                </tbody>
-            </DashContentTable>
-        </DashContent>
-    );
+            <Suspense fallback={<DashContentTableSkeleton />}>
+                <SectionsTable page={page} />
+            </Suspense>
+            <Suspense fallback={<DashContentPaginationSkeleton />}>
+                <SectionPagination data={sections} currentPage={parseInt(page)} />
+            </Suspense>
+        </DashSection>
+    )
+}
+
+function CreateSection() {
+    return (
+        <Link href="/dashboard/create">
+            <Button mode="filled" icon={<Plus />}>
+                Create Section
+            </Button>
+        </Link>
+    )
 }

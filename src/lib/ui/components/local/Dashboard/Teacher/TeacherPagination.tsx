@@ -15,7 +15,7 @@ export default async function TeacherPagination({ currentPage }: TeacherPaginati
             {/* Previous button */}
             {data.prev_page_url && (
                 <DashContentPaginationItem 
-                    href={`/dashboard?page=${currentPage - 1}`}
+                    href={`/dashboard/teachers?page=${currentPage - 1}`}
                 >
                     Previous
                 </DashContentPaginationItem>
@@ -26,7 +26,7 @@ export default async function TeacherPagination({ currentPage }: TeacherPaginati
                 link.url && (
                     <DashContentPaginationItem 
                         key={index} 
-                        href={`/dashboard?page=${index + 1}${currentPage === index + 1 ? '&active' : ''}`}
+                        href={`/dashboard/teachers?page=${index + 1}${currentPage === index + 1 ? '&active' : ''}`}
                     >
                         {link.label}
                     </DashContentPaginationItem>
@@ -36,7 +36,7 @@ export default async function TeacherPagination({ currentPage }: TeacherPaginati
             {/* Next button */}
             {data.next_page_url && (
                 <DashContentPaginationItem 
-                    href={`/dashboard?page=${currentPage + 1}`}
+                    href={`/dashboard/teachers?page=${currentPage + 1}`}
                 >
                     Next
                 </DashContentPaginationItem>

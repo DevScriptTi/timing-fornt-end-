@@ -1,9 +1,13 @@
-export default async function TimingPage({params}: {params: {group: number}}) {
+import { getSectionTiming } from "@/lib/server/actions/sectionTiming/SectionTimingActions";
+import TimingTable from "./timingTable";
+import { getGroupTiming } from "@/lib/server/actions/groupTiming/GroupTimingActions";
+
+
+export default async function TimingPage({ params }: { params: { group: number } }) {
     const { group } = await params;
+    const data = await getGroupTiming(group);
+
     return (
-        <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Timing {group}</h1>
-            <p className="text-gray-500">Manage your timing here.</p>
-        </div>
+        <TimingTable data={data} group={group} />
     );
 }
