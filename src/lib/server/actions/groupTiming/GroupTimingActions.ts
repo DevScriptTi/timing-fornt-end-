@@ -19,7 +19,7 @@ export async function getGroupTiming(groupId: number): Promise<TimeTableResponse
 
 export async function validClassRoom(groupId: number, data_payload: ClassRoomPayload): Promise<ClassroomsResponse> {
     try {
-        const { data } = await axiosInstance.get(`groups/${groupId}/valid-classes`, data_payload);
+        const { data } = await axiosInstance.post(`groups/${groupId}/valid-classes`, data_payload);
         return data;
     } catch (error) {
         console.error("Error fetching group timing:", error.response.data);

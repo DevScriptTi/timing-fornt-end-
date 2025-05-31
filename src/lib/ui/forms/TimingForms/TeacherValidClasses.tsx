@@ -10,6 +10,7 @@ import { getDays, validClassRoom } from "@/lib/server/actions/sectionTiming/Sect
 import { useEffect, useState } from "react";
 import { ClassroomsResponse, ClassRoomPayload } from "@/lib/server/types/validClasses/ValidClasses";
 import { DaysResponse } from "@/lib/server/types/days/days";
+import { Group, GroupResponse, GroupTest } from "@/lib/server/types/group/group";
 
 const FormSchema = z.object({
     "start_time": z.string(),
@@ -28,11 +29,43 @@ const FormSchema = z.object({
     "day_id": z.coerce.number().optional(),
     "module_id": z.coerce.number().optional(),
     "teacher_id": z.coerce.number().optional(),
+    "group_id": z.coerce.number().optional(),
 });
 
 type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function TeacherValidClasses() {
+    const [groups, setGroups] = useState<GroupTest[]>([
+        {
+            id: 1,
+            number: 1,
+        },
+        {
+            id: 2,
+            number: 2,
+        },
+        {
+            id: 3,
+            number: 3,
+        },
+        {
+            id: 4,
+            number: 4,
+        },
+        {
+            id: 5,
+            number: 5,
+        },
+        {
+            id: 6,
+            number: 6,
+        },
+        {
+            id: 7,
+            number: 7,
+        },
+        
+    ]);
     const [sectionId] = useState<number>(1);
     const [classes, setClasses] = useState<(ClassroomsResponse)>([]);
     const [days, setDays] = useState<(DaysResponse)>();
@@ -170,6 +203,17 @@ export default function TeacherValidClasses() {
                                         <option value="">Select a day</option>
                                         {days?.map((day) => (
                                             <option key={day.id} value={day.id}>{day.name}</option>
+                                        ))}
+                                    </SimpleSelect>
+                                     <SimpleSelect
+                                        register={register("group_id")}
+                                        error={errors.day_id?.message}
+                                        label="group_id"
+                                        title="Group"
+                                    >
+                                        <option value="">Select a group</option>
+                                        {groups?.map((group) => (
+                                            <option key={group.id} value={group.id}>{group.number}</option>
                                         ))}
                                     </SimpleSelect>
                                 </>

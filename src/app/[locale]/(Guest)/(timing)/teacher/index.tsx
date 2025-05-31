@@ -2,18 +2,19 @@
 
 import { TeacherTimingResponse } from "@/lib/server/types/sectionTiming/teacherTiming";
 import { DashContent, DashContentAction, DashContenTitle, DashContentTable, TableTd, TableTdMain, TableThead, TableTr } from "@/lib/ui/components/local/Dashboard/DashCrudContent";
+import LessenTimingForm from "@/lib/ui/forms/TimingForms/LessenGroupTimingForm";
 import TeacherValidClasses from "@/lib/ui/forms/TimingForms/TeacherValidClasses";
 import { useState } from "react";
 
-export default function Index({ data }: { data: TeacherTimingResponse }) {
+export default function Index({ data, user }: { data: TeacherTimingResponse, user: any }) {
     const [timingDate] = useState<TeacherTimingResponse>(data);
     return (
         <DashContent>
             <DashContenTitle>
-                Timing
+                Timing  teacher : {user?.user.key.keyable.name} - {user?.user.key.keyable.last}
             </DashContenTitle>
             <DashContentAction>
-                <TeacherValidClasses />
+                <TeacherValidClasses  />
             </DashContentAction>
             <div className="flex flex-col gap-4">
                 {

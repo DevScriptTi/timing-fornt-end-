@@ -33,6 +33,11 @@ export interface Group {
     section: Section;
 }
 
+export interface GroupTest {
+    id: number;
+    number: number;
+}
+
 export interface PaginationLink {
     url: string | null;
     label: string;

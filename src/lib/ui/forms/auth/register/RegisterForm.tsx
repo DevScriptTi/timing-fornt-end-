@@ -85,11 +85,13 @@ export default function RegisterForm() {
                 <Input<RegisterData>
                     label="email"
                     placeholder="Enter your email"
+                    title="Email"
                     register={registerField}
                     error={errors.email?.message}
                 />
                 <Input<RegisterData>
                     label="password"
+                    title="Password"
                     placeholder="Enter your password"
                     register={registerField}
                     type="password"
@@ -97,6 +99,7 @@ export default function RegisterForm() {
                 />
                 <Input<RegisterData>
                     label="password_confirmation"
+                    title="Confirm your password"
                     placeholder="Confirm your password"
                     register={registerField}
                     type="password"
@@ -104,6 +107,7 @@ export default function RegisterForm() {
                 />
                 <Input<RegisterData>
                     label="key"
+                    title="Registration key"
                     placeholder="Enter your registration key"
                     register={registerField}
                     error={errors.key?.message}

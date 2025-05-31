@@ -20,7 +20,12 @@ export default function Request() {
 
                         <div className="flex gap-2 text-sm text-on-surface-variant dark:text-dark-on-surface-variant">
                             <span className="font-medium">Class:</span>
-                            <span>Class 2</span>
+                            <span>Class 2 </span>
+                        </div>
+
+                        <div className="flex gap-2 text-sm text-on-surface-variant dark:text-dark-on-surface-variant">
+                            <span className="font-medium">Group:</span>
+                            <span>Group 2 </span>
                         </div>
 
                         <div className="flex gap-2 text-sm text-on-surface-variant dark:text-dark-on-surface-variant">
