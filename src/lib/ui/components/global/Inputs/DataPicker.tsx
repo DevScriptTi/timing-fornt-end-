@@ -119,7 +119,7 @@ export const DatePicker = ({
 };
 
 const year = () => {
-  let result = [];
+  const result = [];
   for (let index = +format(new Date(), "yyyy"); index > 1900; index--) {
     result.push(index);
   }
@@ -127,7 +127,7 @@ const year = () => {
 };
 
 const month = () => {
-  let result = [];
+  const result = [];
   for (let index = 12; index > 0; index--) {
     result.push(index);
   }
@@ -135,7 +135,7 @@ const month = () => {
 };
 
 const day = () => {
-  let result = [];
+  const result = [];
   for (let index = 31; index > 0; index--) {
     result.push(index);
   }
