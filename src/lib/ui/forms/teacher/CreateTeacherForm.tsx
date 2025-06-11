@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/lib/ui/components/global/Inputs/inputs";
-import { createeacher } from "@/lib/server/actions/teacher/teacherActions";
+import { createTeacher } from "@/lib/server/actions/teacher/teacherActions";
 import { useForm } from "react-hook-form";
 import Button from "@/lib/ui/components/global/Buttons/Button";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,7 @@ const createTeacherSchema = z.object({
         .min(1, "Last name is required")
         .regex(/^[A-Z]/, "First letter must be capital")
         .regex(/^[A-Z][a-z]*$/, "Only letters are allowed"),
+    date_of_birth : z.string(),
 });
 
 type CreateTeacherFormData = z.infer<typeof createTeacherSchema>;
@@ -35,16 +36,8 @@ export default function CreateTeacherForm() {
         resolver: zodResolver(createTeacherSchema),
     });
 
-    useEffect(() => {
-        if (isSubmitSuccessful) {
-            const timer = setTimeout(() => {
-                router.refresh();
-                router.push('/dashboard');
-            }, 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [isSubmitSuccessful, router]);
-
+   
+    console.log(errors)
     const onSubmit = async (data: CreateTeacherFormData) => {
         try {
             await createTeacher(data);
@@ -75,6 +68,14 @@ export default function CreateTeacherForm() {
                 error={errors.last?.message}
                 register={register}
             />
+            <Input
+                label="date_of_birth"
+                title="Date of birth"
+                type="date"
+                error={errors.last?.message}
+                register={register}
+            />
+
             <Button
                 type="submit"
                 mode="filled"

@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import UpBar from "../../global/Navigations/NavBar/NavBar";
 import NavBarGroup from "../../global/Navigations/NavBar/NavBarGroupd";
 import NavBarItem from "../../global/Navigations/NavBar/NavBarItem";
-import { isAuth } from "@/lib/server/tools/auth";
+import { isAdmin, isAuth } from "@/lib/server/tools/auth";
 import Logout from "./Logout";
 import Image from "next/image";
 import Mode from "../Mode";
@@ -23,9 +23,13 @@ export default async function UpBarGuest() {
                         </>
                     ) : (
                         <>
-                            <NavBarItem link={`/${locale}/dashboard`}>
-                                {t('HomePage.UpBar.dashboard')}
-                            </NavBarItem>
+                            {
+                                await isAdmin() && (
+                                    <NavBarItem link={`/${locale}/dashboard`}>
+                                        {t('HomePage.UpBar.dashboard')}
+                                    </NavBarItem>
+                                )
+                            }
                             <Logout />
                         </>
 

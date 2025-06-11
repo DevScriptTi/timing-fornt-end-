@@ -5,7 +5,6 @@ import { Teacher } from "@/lib/server/types/teacher/teacher";
 import { updateTeacher } from "@/lib/server/actions/teacher/teacherActions";
 import { useForm } from "react-hook-form";
 import Button from "@/lib/ui/components/global/Buttons/Button";
-import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check } from "lucide-react";
@@ -19,6 +18,7 @@ const updateTeacherSchema = z.object({
         .min(1, "Last name is required")
         .regex(/^[A-Z]/, "First letter must be capital")
         .regex(/^[A-Z][a-z]*$/, "Only letters are allowed"),
+    date_of_birth: z.string().optional(),
 });
 
 type UpdateTeacherFormData = z.infer<typeof updateTeacherSchema>;
@@ -28,7 +28,6 @@ interface UpdateTeacherFormProps {
 }
 
 export default function UpdateTeacherForm({ teacher }: UpdateTeacherFormProps) {
-    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -38,13 +37,15 @@ export default function UpdateTeacherForm({ teacher }: UpdateTeacherFormProps) {
         defaultValues: {
             name: teacher.name,
             last: teacher.last,
+            date_of_birth: teacher.date_of_birth || "",
+            // Ensure date_of_birth is a string, even if it's empty
         },
     });
 
     const onSubmit = async (data: UpdateTeacherFormData) => {
         try {
             await updateTeacher(teacher.id, data);
-            
+
         } catch (error) {
             console.error('Error updating teacher:', error);
         }
@@ -72,8 +73,16 @@ export default function UpdateTeacherForm({ teacher }: UpdateTeacherFormProps) {
                 error={errors.last?.message}
                 register={register}
             />
-            <Button 
-                type="submit" 
+            <Input
+                label="date_of_birth"
+                title="Date of Birth"
+                type="date"
+                placeholder="Select date of birth"
+                error={errors.date_of_birth?.message}
+                register={register}
+            />
+            <Button
+                type="submit"
                 mode="filled"
                 disabled={isSubmitting}
             >

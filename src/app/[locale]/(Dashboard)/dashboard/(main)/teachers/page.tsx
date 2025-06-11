@@ -38,7 +38,7 @@ export default async function page({ searchParams }: PageProps) {
 
 function CreateTeacher() {
     return (
-        <Link href="/dashboard/create">
+        <Link href="/dashboard/teachers/create">
             <Button mode="filled" icon={<Plus />}>
                 Create Teacher
             </Button>

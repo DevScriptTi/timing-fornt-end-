@@ -13,6 +13,7 @@ export async function createTeacher(teacherData: CreateTeacherRequest): Promise<
         revalidatePath('/dashboard')
         return data
     } catch (error: any) {
+        console.error('Error creating teacher:', error.response?.data)
         if (error.response?.data) {
             return error.response.data as TeacherErrorResponse
         }
@@ -29,6 +30,7 @@ export async function updateTeacher(id: number, teacherData: Partial<CreateTeach
         revalidatePath('/dashboard')
         return data
     } catch (error: any) {
+        console.error('Error updating teacher:', error.response?.data)
         if (error.response?.data) {
             return error.response.data as TeacherErrorResponse
         }

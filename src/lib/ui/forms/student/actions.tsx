@@ -1,18 +1,18 @@
 "use server";
-import { Teacher } from "@/lib/server/types/teacher/teacher";
+import { Student } from "@/lib/server/types/student/student";
 import Link from "next/link";
 import { Pencil } from "lucide-react";
-import DeleteTeacher from "./delete";
+import DeleteStudent from "./delete";
 
-export default async function TeacherActions({ teacher }: { teacher: Teacher }) {
+export default async function StudentActions({ student }: { student: Student }) {
     return (
         <div
             className="flex items-center gap-1"
         >
-            <Link href={`/dashboard/teachers/${teacher.id}`}>
+            <Link href={`/dashboard/students/${student.id}`}>
                 <Pencil className="text-green-700 dark:text-green-400" size={16} />
             </Link>
-            <DeleteTeacher teacher={teacher} />
+            <DeleteStudent student={student} />
         </div>
     )
 }

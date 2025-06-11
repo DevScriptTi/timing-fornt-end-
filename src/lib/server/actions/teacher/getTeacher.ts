@@ -15,7 +15,7 @@ export async function getTeacher(id: number): Promise<Teacher> {
         )
         return data.teacher
     } catch (error) {
-        console.error('Error fetching teacher:', error)
+        console.error('Error fetching teacher:', error.response?.data)
         throw error
     }
 } 
